@@ -1,0 +1,47 @@
+#! /usr/bin/bash
+
+# It takes 2 inputs
+# what you want to check (Database, table or column)
+# DatabaseName, tableName or ColumnName
+# Where to go if the input is wrong
+# function checkInput() {
+
+# }
+
+echo -e "\n\nHello from Createdb\n"
+read -rp "Enter A valid database name that you want to create or type 'exit' to quit
+Notice: Spaces will be replaced by underScore character
+" databaseName
+databaseName=${databaseName// /_}
+echo "$databaseName"
+case $databaseName in
+\\)
+    echo -e "You Have Entered the escape character, Please Enter a valid database name\n"
+    . createdb.sh
+    ;;
+[Ee]xit)
+    echo -e "Thank you for using our DBMS Engine!\n"
+    exit
+    ;;
++([0-9])*)
+    echo -e "Databases name should NOT start with number\n"
+    . createdb.sh
+    ;;
+*+(["'"'!''@''#''$''%''^''&''*''('')''-''=''+''/''`''~''.'';'':'',''>''<''['']''{''}''"'\\])*)
+    echo -e "Databases name should Not contain special characters\n"
+    . createdb.sh
+    ;;
+[a-zA-z]*([a-zA-Z0-9_]))
+    echo -e "esm kolo tamm\n"
+
+    # After validating user input, Create the database and cd to it
+    # Function is in main.sh
+    create directory "$databaseName"
+    pwd
+    . dbMainPage.sh "$databaseName"
+    ;;
+*)
+    echo -e "You Have Enter in invalid database Name, please choose another one\n"
+    . createdb.sh
+    ;;
+esac
